@@ -1,0 +1,108 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringTokenizer st;
+	
+	static String w;
+	static int n, m;
+	static char[][] map;
+	static int[][] turn = {{0, 0}, {-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+	static int[][] nine = {{0, 0},{3, 6}, {4, 5}, {1, 8}, {2, 7}, {2, 7}, {1, 8}, {4, 5}, {3, 6}}; 
+	static int ans = 0;
+	
+	public static void find(int ind, int dir, boolean tur, int x, int y){
+	    
+	    if(ind==w.length()-1){
+	        int a = x+turn[dir][0];
+	        int b = y+turn[dir][1];
+	        if(a>=0&&a<n&&b>=0&&b<m&&map[a][b]==w.charAt(ind)){
+	            ans++;
+	            //System.out.println(w.charAt(ind) + " " + a+" " + b);
+	        }
+	    }
+	    else{
+	        int a = x+turn[dir][0];
+	        int b = y+turn[dir][1];
+	        //System.out.println(a + " " + b);
+	        if(a>=0&&a<n&&b>=0&&b<m&&map[a][b]==w.charAt(ind)){
+	            //System.out.println(map[a][b] + " " + a + " " + b);
+	            find(ind+1, dir, tur, a, b);
+	            if(!tur){
+	                find(ind+1, nine[dir][0], true, a, b);
+	                find(ind+1, nine[dir][1], true, a, b);
+	            }
+	        }
+	    }
+	}
+	
+	public static void main(String[] args)throws IOException {
+	    w = readLine();
+	    n = readInt();
+	    m = readInt();
+	    map = new char[n][m];
+	    for(int i = 0 ; i < n; i++){
+	        String asdf[] = readLine().split(" ");
+	        
+	        for(int j = 0 ; j < m; j++){
+	            map[i][j]=asdf[j].charAt(0);
+	        }
+	    }
+	    for(int i = 0 ; i < n; i++){
+	        for(int j = 0 ; j < m; j++){
+	            if(map[i][j]==w.charAt(0)){
+	                for(int a = 1 ; a < 9; a++){
+	                    int x = i+turn[a][0];
+	                    int y = j+turn[a][1];
+	                    if(x>=0&&x<n&&y>=0&&y<m&&map[x][y]==w.charAt(1)){
+	                        if(w.length()>2){
+	                        //System.out.println(map[i][j] + " " + i + " " + j + " " + a + "\n" + map[x][y] +" " + x + " " + y + " " + a);
+	                        find(2, a, false, i+turn[a][0], j+turn[a][1]);
+	                        
+	                        find(2, nine[a][0], true, x, y);
+	                        find(2, nine[a][1], true, x, y);
+	                        //System.out.println("");
+	                        }else ans++;
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    
+	    System.out.println(ans);
+	    // 1 2 3
+	    // 4 0 5
+	    // 6 7 8
+	    
+	    
+	    
+	}
+	
+	
+    
+	static String next() throws IOException {
+		while (st == null || !st.hasMoreTokens())
+			st = new StringTokenizer(br.readLine().trim());
+		return st.nextToken();
+	}
+ 
+	static long readLong() throws IOException {
+		return Long.parseLong(next());
+	}
+ 
+	static int readInt() throws IOException {
+		return Integer.parseInt(next());
+	}
+ 
+	static double readDouble() throws IOException {
+		return Double.parseDouble(next());
+	}
+ 
+	static char readCharacter() throws IOException {
+		return next().charAt(0);
+	}
+ 
+	static String readLine() throws IOException {
+		return br.readLine().trim();
+	}
+}
