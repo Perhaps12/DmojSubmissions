@@ -1,0 +1,64 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringTokenizer st;
+	
+	static int n;
+	static ArrayList<Integer> map[];
+	static boolean vis[];
+	static ArrayList<Integer> sort = new ArrayList<>();
+	
+	public static void main(String[] args)throws IOException {
+	    n = readInt();
+	    map = new ArrayList[n+1];
+	    vis = new boolean[n+1];
+	    for(int i = 0 ; i < n+1; i++)map[i]=new ArrayList<>();
+	    for(int i = readInt(); i >0; i--){
+	        map[readInt()].add(readInt());
+	    }
+	    for(int i = 1; i <= n; i++){
+	        if(!vis[i])toposort(i);
+	    }Collections.reverse(sort);
+	    
+	    int len[] = new int[n+1];
+	    for(int i : sort){
+	        for(int j : map[i])len[j] = Math.max(len[j], len[i] + 1 );
+	    }
+	    Arrays.sort(len);
+	    System.out.println(len[n]);
+	}
+	
+	public static void toposort(int n){
+	    vis[n]=true;
+	    for(int i : map[n]){
+	        if(!vis[i])toposort(i);
+	    }sort.add(n);
+	}
+    
+	static String next() throws IOException {
+		while (st == null || !st.hasMoreTokens())
+			st = new StringTokenizer(br.readLine().trim());
+		return st.nextToken();
+	}
+ 
+	static long readLong() throws IOException {
+		return Long.parseLong(next());
+	}
+ 
+	static int readInt() throws IOException {
+		return Integer.parseInt(next());
+	}
+ 
+	static double readDouble() throws IOException {
+		return Double.parseDouble(next());
+	}
+ 
+	static char readCharacter() throws IOException {
+		return next().charAt(0);
+	}
+ 
+	static String readLine() throws IOException {
+		return br.readLine().trim();
+	}
+}
