@@ -1,3 +1,3 @@
 # DmojSubmissions
-compilation of some of my dmoj submissions
-These are all problems worth 10 points in many different catagories
+A compilation of sme of my submissions to dmoj | These problems are all worth 10 points from varying catagories
+A full list of my submissions can be found here: https://dmoj.ca/user/Bobbychuck12
