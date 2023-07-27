@@ -1,0 +1,54 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringTokenizer st;
+	
+	
+	public static void main(String[] args)throws IOException {
+	    while(true){
+          String n = readLine();
+          if(n.equals("X"))break;
+          while(true){
+              if((n.contains("BAS")||n.contains("ANA"))&&!n.equals("A")){
+                  n=n.replaceAll("BAS", "A");
+                  n=n.replaceAll("ANA", "A");
+              }else{
+                  break;
+              }
+          }if(n.equals("A")){
+              System.out.println("YES");
+          }else{
+              System.out.println("NO");
+          }
+      }
+	}
+	
+	
+    
+	static String next() throws IOException {
+		while (st == null || !st.hasMoreTokens())
+			st = new StringTokenizer(br.readLine().trim());
+		return st.nextToken();
+	}
+ 
+	static long readLong() throws IOException {
+		return Long.parseLong(next());
+	}
+ 
+	static int readInt() throws IOException {
+		return Integer.parseInt(next());
+	}
+ 
+	static double readDouble() throws IOException {
+		return Double.parseDouble(next());
+	}
+ 
+	static char readCharacter() throws IOException {
+		return next().charAt(0);
+	}
+ 
+	static String readLine() throws IOException {
+		return br.readLine().trim();
+	}
+}
