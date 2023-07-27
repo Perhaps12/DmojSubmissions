@@ -1,0 +1,94 @@
+import java.util.*;
+import java.io.*;
+public class Main {
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringTokenizer st;
+	
+	static int n, m;
+	static ArrayList<Integer> map[];
+	static ArrayList<Integer> mapp[];
+	static boolean vis[];
+	static ArrayList<Integer> sort = new ArrayList<>();
+	
+	public static void main(String[] args)throws IOException {
+	    n = readInt();
+	    m = readInt();
+	    map = new ArrayList[m];
+	    mapp = new ArrayList[m];
+	    vis = new boolean[m];
+	    for(int i = 0 ; i < m; i++){
+	        map[i]=new ArrayList<>();
+	        mapp[i]=new ArrayList<>();
+	    }
+	    for(int i = 0 ; i < n; i++){
+	        String s = next();
+	        //System.out.println(s);
+	        for(int j = 0 ; j < m; j++){
+	            for(int I = j; I < m; I++){
+	                if(!map[(int)s.charAt(I)-65].contains((int)s.charAt(j)-65)){
+	                    map[(int)s.charAt(I)-65].add((int)s.charAt(j)-65);
+	                }
+	            }
+	        }
+	        //for(int im = 0 ; im < m; im++)System.out.println(map[im]);
+	    }
+	    
+	    for(int i = 0 ; i < m; i++){
+	        for(int j = 0 ; j < m; j++){
+	            if(!map[j].contains(i))mapp[j].add(i);
+	        }
+	    }
+	   // System.out.println("");
+	    //for(int im = 0 ; im < m; im++)System.out.println(mapp[im]);
+	   
+	    for(int i = 0 ;i < m; i++){
+	        if(!vis[i])toposort(i);
+	    }Collections.reverse(sort);
+	    //System.out.println(sort);
+	    
+	    int[] len = new int[m];
+	    for(int i : sort){
+	        for(int j : mapp[i]){
+	            len[j]=Math.max(len[j], len[i]+1);
+	        }
+	    }
+	    
+	    
+	    Arrays.sort(len);
+	    System.out.println(len[m-1]+1);
+	    
+	}
+	
+	public static void toposort(int v){
+	    vis[v]=true;
+	    for(int i : mapp[v]){
+	        if(!vis[i])toposort(i);
+	    }sort.add(v);
+	}
+    
+	static String next() throws IOException {
+		while (st == null || !st.hasMoreTokens())
+			st = new StringTokenizer(br.readLine().trim());
+		return st.nextToken();
+	}
+ 
+	static long readLong() throws IOException {
+		return Long.parseLong(next());
+	}
+ 
+	static int readInt() throws IOException {
+		return Integer.parseInt(next());
+	}
+ 
+	static double readDouble() throws IOException {
+		return Double.parseDouble(next());
+	}
+ 
+	static char readCharacter() throws IOException {
+		return next().charAt(0);
+	}
+ 
+	static String readLine() throws IOException {
+		return br.readLine().trim();
+	}
+}
